@@ -1,0 +1,6 @@
+- name: Set up Izanami
+  hosts: Izanami
+  become: true
+
+  roles:
+    - searxng
