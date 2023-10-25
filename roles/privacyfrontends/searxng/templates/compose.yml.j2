@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:alpine
+    restart: unless-stopped
+    command: redis-server --save "" --appendonly "no"
+    tmpfs:
+      - /var/lib/redis
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    ports:
+     - "127.0.0.1:65529:8080"
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml
+    environment:
+      - SEARXNG_BASE_URL=https://searxng.xn--hackerhhle-kcb.org
+      - SEARXNG_REDIS_URL=redis://redis
+      - SEARXNG_SECRET="{{ searxng_secret_key }}"
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"

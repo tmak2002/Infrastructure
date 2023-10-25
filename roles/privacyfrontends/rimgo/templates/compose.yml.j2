@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  rimgo:
+    container_name: rimgo
+    image: codeberg.org/rimgo/rimgo:1.2.1
+    ports:
+      - 127.0.0.1:65530:3000
+    restart: unless-stopped
+    environment:
+      - PRIVACY_COUNTRY=DE
+      - PRIVACY_PROVIDER=Xitylight
+      - PRIVACY_NOT_COLLECTED=true
+      - PRIVACY_IP=false
+      - PRIVACY_URL=false
+      - PRIVACY_DEVICE=false
+      - PRIVACY_DIAGNOSTICS=false
+    user: 65534:65534 # equivalent to `nobody`
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    cap_drop:
+      - ALL

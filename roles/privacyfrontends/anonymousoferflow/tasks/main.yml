@@ -1,0 +1,26 @@
+- name: Create anonymousoverflow directory
+  ansible.builtin.file: 
+    path: /services/anonymousoverflow
+    state: directory 
+    mode: 0755
+
+- name: Setup anonymousoverflow
+  ansible.builtin.template: 
+    src: "../templates/compose.yml.j2" 
+    dest: "/services/anonymousoverflow/compose.yml"
+    mode: 0644
+
+- name: Pull anonymousoverflow image
+  ansible.builtin.command:
+    chdir: "/services/anonymousoverflow"
+    cmd: docker compose pull
+
+- name: Stop anonymousoverflow container
+  ansible.builtin.command:
+    chdir: "/services/anonymousoverflow"
+    cmd: docker compose down
+
+- name: Start anonymousoverflow container
+  ansible.builtin.command:
+    chdir: "/services/anonymousoverflow"
+    cmd: docker compose up -d --build --remove-orphans

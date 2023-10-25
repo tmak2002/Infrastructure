@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  anonymousoverflow:
+    container_name: anonymousoverflow
+    image: ghcr.io/httpjamesm/anonymousoverflow:release
+    environment:
+      - APP_URL=overflow.xn--hackerhhle-kcb.org
+      - JWT_SIGNING_SECRET={{ anonymousoverflow_signing_secret }}
+    ports:
+      - 127.0.0.1:65535:8080
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
