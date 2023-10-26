@@ -1,7 +1,7 @@
 services:
   wikiless:
     container_name: wikiless
-    image: ghcr.io/metastem/wikiless:latest@sha256:619d240975318d13f5381075a5f3ef6f6fbd43010123201eb80ae1442fbd7ac7
+    image: ghcr.io/metastem/wikiless:latest@sha256:619d240975318d13f5381075a5f3ef6f6fbd43010123201eb80ae1442fbd7ac7
     restart: unless-stopped
     environment:
       # see config.js.template for more settings
@@ -20,7 +20,7 @@ services:
       - redis
 
   redis:
-    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
+    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
     container_name: wikiless-redis
     restart: unless-stopped
     user: nobody
