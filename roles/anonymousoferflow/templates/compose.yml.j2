@@ -3,7 +3,7 @@ version: '3'
 services:
   anonymousoverflow:
     container_name: anonymousoverflow
-    image: ghcr.io/httpjamesm/anonymousoverflow:release@sha256:449195ded30d3e7edd93a8265bf196c9c406a2280cb0eb535c4f9851269706d7
+    image: ghcr.io/httpjamesm/anonymousoverflow:release@sha256:449195ded30d3e7edd93a8265bf196c9c406a2280cb0eb535c4f9851269706d7
     environment:
       - APP_URL=overflow.xn--hackerhhle-kcb.org
       - JWT_SIGNING_SECRET={{ anonymousoverflow_signing_secret }}

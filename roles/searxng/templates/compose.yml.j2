@@ -3,7 +3,7 @@ version: '3'
 services:
   redis:
     container_name: redis
-    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
+    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
     restart: unless-stopped
     command: redis-server --save "" --appendonly "no"
     tmpfs:
@@ -17,7 +17,7 @@ services:
 
   searxng:
     container_name: searxng
-    image: searxng/searxng:latest@sha256:baf94d60d5c721b0884bb21961a20d6e305354a2709aaeef166dfff6fd1a0ed1
+    image: searxng/searxng:latest@sha256:baf94d60d5c721b0884bb21961a20d6e305354a2709aaeef166dfff6fd1a0ed1
     restart: unless-stopped
     ports:
      - "127.0.0.1:65529:8080"
