@@ -3,5 +3,11 @@
   become: true
 
   roles:
-    - searxng
+    - anonymousoverflow
     - libreddit
+    - nitter
+    - proxitok
+    - quetre
+    - rimgo
+    - searxng
+    - wikiless
