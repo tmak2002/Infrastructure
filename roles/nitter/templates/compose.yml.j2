@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nitter:
-    image: zedeus/nitter:latest@sha256:c0275459df4de2331a1ceac61c42be30a8731e168f582851134b5ec25af75171
+    image: zedeus/nitter:latest@sha256:c0275459df4de2331a1ceac61c42be30a8731e168f582851134b5ec25af75171
     container_name: nitter
     ports:
       - "127.0.0.1:65533:8080"
@@ -24,7 +24,7 @@ services:
       - ALL
 
   nitter-redis:
-    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
+    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
     container_name: nitter-redis
     command: redis-server --save 60 1 --loglevel warning
     restart: unless-stopped
