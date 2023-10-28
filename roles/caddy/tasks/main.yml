@@ -1,0 +1,11 @@
+---
+- name: Install on Debian, Ubuntu, Raspbian
+  ansible.builtin.include_tasks: apt.yml
+  when: ansible_os_family in ['debian', 'ubuntu', 'raspbian']
+
+- name: Update Caddyfile
+  ansible.builtin.template:
+    dest: /etc/caddy/Caddyfile
+    src: Caddyfile.j2
+  notify:
+    - Restart caddy

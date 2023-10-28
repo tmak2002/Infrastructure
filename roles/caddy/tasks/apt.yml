@@ -1,0 +1,24 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - caddy
+    state: present
+
+- name: Add Caddy stable repository key and repository
+  apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    state: present
+  apt_repository:
+    repo: deb https://dl.cloudsmith.io/public/caddy/stable/debian/ stable main
+    state: present
+
+- name: Update apt cache and install Caddy
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: caddy
+    state: present

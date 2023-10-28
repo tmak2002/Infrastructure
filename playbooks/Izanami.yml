@@ -3,6 +3,7 @@
   become: true
 
   roles:
+    - caddy
     - anonymousoverflow
     - libreddit
     - nitter
