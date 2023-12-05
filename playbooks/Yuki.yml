@@ -1,0 +1,15 @@
+- name: Set up Yuki
+  hosts: Yuki
+  become: true
+
+  roles:
+    - ddclient
+    - searxng
+    - anonymousoverflow
+    - nitter
+    - quetre
+    - libreddit
+    - proxitok
+    - rimgo
+    - wikiless
+    - caddy

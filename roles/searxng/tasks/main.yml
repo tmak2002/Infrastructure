@@ -1,0 +1,32 @@
+- name: Create searxng directory
+  ansible.builtin.file:
+    path: /services/searxng
+    state: directory
+    mode: 0755
+
+- name: Setup searxng
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/searxng/compose.yml"
+    mode: 0644
+
+- name: Setup searxng settings
+  ansible.builtin.template:
+    src: "../templates/settings.yml.j2"
+    dest: "/services/searxng/settings.yml"
+    mode: 0644
+
+- name: Pull searxng image
+  ansible.builtin.command:
+    chdir: "/services/searxng"
+    cmd: docker compose pull
+
+- name: Stop searxng container
+  ansible.builtin.command:
+    chdir: "/services/searxng"
+    cmd: docker compose down
+
+- name: Start searxng container
+  ansible.builtin.command:
+    chdir: "/services/searxng"
+    cmd: docker compose up -d --build --remove-orphans

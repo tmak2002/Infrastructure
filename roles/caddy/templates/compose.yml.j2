@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  caddy:
+    container_name: caddy
+    image: caddy:2.7.5-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./sites-enabled:/etc/caddy/sites-enabled
+      - ./data:/data:rw
+      - ./config:/config:rw
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    networks:
+      - searxng_ex
+      - anonymousoverflow
+      - nitter_ex
+      - quetre
+      - libreddit
+      - proxitok_ex
+      - rimgo
+      - wikiless_ex
+
+networks:
+  searxng_ex:
+    external: true
+  anonymousoverflow:
+    external: true
+  nitter_ex:
+    external: true
+  quetre:
+    external: true
+  libreddit:
+    external: true
+  proxitok_ex:
+    external: true
+  rimgo:
+    external: true
+  wikiless_ex:
+    external: true

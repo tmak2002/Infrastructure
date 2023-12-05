@@ -1,0 +1,32 @@
+- name: Create caddy directory
+  ansible.builtin.file:
+    path: /caddy
+    state: directory
+    mode: 0755
+
+- name: Setup caddy
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/caddy/compose.yml"
+    mode: 0644
+
+- name: Setup Caddyfile
+  ansible.builtin.template:
+    src: "../templates/Caddyfile.j2"
+    dest: "/caddy/Caddyfile"
+    mode: 0644
+
+- name: Pull caddy image
+  ansible.builtin.command:
+    chdir: "/caddy"
+    cmd: docker compose pull
+
+- name: Stop caddy container
+  ansible.builtin.command:
+    chdir: "/caddy"
+    cmd: docker compose down
+
+- name: Start caddy container
+  ansible.builtin.command:
+    chdir: "/caddy"
+    cmd: docker compose up -d --build --remove-orphans

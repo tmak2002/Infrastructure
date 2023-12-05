@@ -1,0 +1,26 @@
+- name: Create quetre directory
+  ansible.builtin.file:
+    path: /services/quetre
+    state: directory
+    mode: 0755
+
+- name: Setup quetre
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/quetre/compose.yml"
+    mode: 0644
+
+- name: Pull quetre image
+  ansible.builtin.command:
+    chdir: "/services/quetre"
+    cmd: docker compose pull
+
+- name: Stop quetre container
+  ansible.builtin.command:
+    chdir: "/services/quetre"
+    cmd: docker compose down
+
+- name: Start quetre container
+  ansible.builtin.command:
+    chdir: "/services/quetre"
+    cmd: docker compose up -d --build --remove-orphans

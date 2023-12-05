@@ -1,0 +1,26 @@
+- name: Create rimgo directory
+  ansible.builtin.file:
+    path: /services/rimgo
+    state: directory
+    mode: 0755
+
+- name: Setup rimgo
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/rimgo/compose.yml"
+    mode: 0644
+
+- name: Pull rimgo image
+  ansible.builtin.command:
+    chdir: "/services/rimgo"
+    cmd: docker compose pull
+
+- name: Stop rimgo container
+  ansible.builtin.command:
+    chdir: "/services/rimgo"
+    cmd: docker compose down
+
+- name: Start rimgo container
+  ansible.builtin.command:
+    chdir: "/services/rimgo"
+    cmd: docker compose up -d --build --remove-orphans

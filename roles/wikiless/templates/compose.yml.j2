@@ -1,0 +1,46 @@
+services:
+  wikiless:
+    container_name: wikiless
+    image: ghcr.io/metastem/wikiless:latest@sha256:619d240975318d13f5381075a5f3ef6f6fbd43010123201eb80ae1442fbd7ac7
+    restart: unless-stopped
+    environment:
+      # see config.js.template for more settings
+      DOMAIN: wikiless.xn--hackerhhle-kcb.org
+      DEFAULT_LANG: en
+      HTTP_ADDR: 0.0.0.0
+      REDIS_URL: redis://wikiless-redis
+      TRUST_PROXY: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    depends_on:
+      - redis
+    networks:
+      - wikiless_ex
+      - wikiless_in
+
+  redis:
+    image: redis:alpine@sha256:2d44eb73209e5af4118de67e89b01709bfec7cc5a4c1cec29665f6d011c70783
+    container_name: wikiless-redis
+    restart: unless-stopped
+    user: nobody
+    read_only: true
+    tmpfs:
+      - /data:size=10M,mode=0770,uid=65534,gid=65534,noexec,nosuid,nodev
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    networks:
+      - wikiless_in
+
+networks:
+  wikiless_in:
+    name: wikiless_in
+  wikiless_ex:
+    name: wikiless_ex

@@ -1,0 +1,10 @@
+- name: Set up ddclient
+  ansible.builtin.template:
+    src: "../templates/ddclient.conf.j2"
+    dest: "/etc/ddclient.conf"
+    mode: 0644
+
+- name: restart ddclient
+  ansible.builtin.systemd_service:
+    state: restarted
+    name: ddclient
