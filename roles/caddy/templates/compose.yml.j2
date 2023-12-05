@@ -4,7 +4,7 @@ services:
 
   caddy:
     container_name: caddy
-    image: caddy:2.7.5-alpine
+    image: caddy:2.7.5-alpine@sha256:9821d1ef822957bf0ac22f9c6e26ad6a3198604f29b3b79194acba7ccaff4532
     restart: unless-stopped
     ports:
       - "80:80/tcp"
