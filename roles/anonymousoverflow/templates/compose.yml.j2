@@ -3,7 +3,7 @@ version: '3'
 services:
   anonymousoverflow:
     container_name: anonymousoverflow
-    image: codeberg.org/aryak/anonymousoverflow-docker-builds:latest@sha256:73dd28d552c5da9b185f9e36842ab1b69d2caabacebddd2af1a615442a998ed8
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds:latest@sha256:e4374a345e9e44476544ab4c26f2c93e076abf8e866fb22d28fc816c30aa116d
     environment:
       - APP_URL=overflow.xn--hackerhhle-kcb.org
       - JWT_SIGNING_SECRET={{ anonymousoverflow_signing_secret }}
