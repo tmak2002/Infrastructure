@@ -1,0 +1,26 @@
+- name: Create libreddit directory
+  ansible.builtin.file:
+    path: /services/libreddit
+    state: directory
+    mode: 0755
+
+- name: Setup libreddit
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/libreddit/compose.yml"
+    mode: 0644
+
+- name: Pull libreddit image
+  ansible.builtin.command:
+    chdir: "/services/libreddit"
+    cmd: docker compose pull
+
+- name: Stop libreddit container
+  ansible.builtin.command:
+    chdir: "/services/libreddit"
+    cmd: docker compose down
+
+- name: Start libreddit container
+  ansible.builtin.command:
+    chdir: "/services/libreddit"
+    cmd: docker compose up -d --build --remove-orphans

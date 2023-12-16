@@ -1,0 +1,32 @@
+- name: Create nitter directory
+  ansible.builtin.file:
+    path: /services/nitter
+    state: directory
+    mode: 0755
+
+- name: Setup nitter
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/nitter/compose.yml"
+    mode: 0644
+
+- name: Setup nitter config
+  ansible.builtin.template:
+    src: "../templates/nitter.conf.j2"
+    dest: "/services/nitter/nitter.conf"
+    mode: 0644
+
+- name: Pull nitter image
+  ansible.builtin.command:
+    chdir: "/services/nitter"
+    cmd: docker compose pull
+
+- name: Stop nitter container
+  ansible.builtin.command:
+    chdir: "/services/nitter"
+    cmd: docker compose down
+
+- name: Start nitter container
+  ansible.builtin.command:
+    chdir: "/services/nitter"
+    cmd: docker compose up -d --build --remove-orphans

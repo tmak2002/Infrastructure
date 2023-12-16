@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  nitter:
+    image: zedeus/nitter:latest-arm64@sha256:75f09f38b60ffba4eeeef0e1ceac2b6411f9393c58cdafd6e81dd42f336e8660
+    container_name: nitter
+    volumes:
+      - ./nitter.conf:/src/nitter.conf:Z,ro
+    depends_on:
+      - nitter-redis
+    restart: unless-stopped
+    healthcheck:
+      test: wget -nv --tries=1 --spider http://127.0.0.1:8080/Jack/status/20 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 2
+    user: "998:998"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - nitter_ex
+      - nitter_in
+
+  nitter-redis:
+    image: redis:alpine@sha256:090276da2603db19b154602c374f505d94c10ea57e9749fc3e68e955284bf0fd
+    container_name: nitter-redis
+    command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: redis-cli ping
+      interval: 30s
+      timeout: 5s
+      retries: 2
+    user: "999:1000"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - nitter_in
+
+networks:
+  nitter_in:
+    name: nitter_in
+  nitter_ex:
+    name: nitter_ex

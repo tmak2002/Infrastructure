@@ -1,0 +1,26 @@
+- name: Create proxitok directory
+  ansible.builtin.file:
+    path: /services/proxitok
+    state: directory
+    mode: 0755
+
+- name: Setup proxitok
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2"
+    dest: "/services/proxitok/compose.yml"
+    mode: 0644
+
+- name: Pull proxitok image
+  ansible.builtin.command:
+    chdir: "/services/proxitok"
+    cmd: docker compose pull
+
+- name: Stop proxitok container
+  ansible.builtin.command:
+    chdir: "/services/proxitok"
+    cmd: docker compose down
+
+- name: Start proxitok container
+  ansible.builtin.command:
+    chdir: "/services/proxitok"
+    cmd: docker compose up -d --build --remove-orphans

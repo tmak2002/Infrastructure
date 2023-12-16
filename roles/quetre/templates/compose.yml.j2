@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  quetre:
+    container_name: quetre
+    image: quay.io/pussthecatorg/quetre:latest@sha256:65619dfeec5eff1cba7740fd93ad6f9bd85027fd1710eb771b8ed579907a3827
+    restart: unless-stopped
+    environment:
+      - "NODE_ENV=production"
+      - "PORT=3000"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - quetre
+
+networks:
+  quetre:
+    name: quetre

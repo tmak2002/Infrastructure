@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  libreddit:
+    image: libreddit/libreddit:arm@sha256:1e4c87437f4d791b94059e00fb993ff4e4ac1855fbbf2548af1be79bc78a33ec
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 5m
+      timeout: 3s
+    environment:
+      - FRONT_PAGE=popular
+      - COMMENT_SORT=new
+      - BLUR_NSFW=on
+      - USE_HLS=on
+      - AUTOPLAY_VIDEOS=off
+    user: nobody
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - libreddit
+
+networks:
+  libreddit:
+    name: libreddit

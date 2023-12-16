@@ -1,0 +1,26 @@
+- name: Create wikiless directory
+  ansible.builtin.file:
+    path: /services/wikiless
+    state: directory
+    mode: 0755
+
+- name: Setup wikiless
+  ansible.builtin.template:
+    src: "../templates/compose.yml.j2" 
+    dest: "/services/wikiless/compose.yml"
+    mode: 0644
+
+- name: Pull wikiless image
+  ansible.builtin.command:
+    chdir: "/services/wikiless"
+    cmd: docker compose pull
+
+- name: Stop wikiless container
+  ansible.builtin.command:
+    chdir: "/services/wikiless"
+    cmd: docker compose down
+
+- name: Start wikiless container
+  ansible.builtin.command:
+    chdir: "/services/wikiless"
+    cmd: docker compose up -d --build --remove-orphans
